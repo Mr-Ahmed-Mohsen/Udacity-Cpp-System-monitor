@@ -1,4 +1,4 @@
 #include "processor.h"
-
+#include "linux_parser.h"
 // TODO: Return the aggregate CPU utilization
-float Processor::Utilization() { returnLinuxParser::CpuUtilization(); }
+float Processor::Utilization() { return LinuxParser::CpuUtilization(); }
