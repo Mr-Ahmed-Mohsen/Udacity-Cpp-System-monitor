@@ -96,10 +96,10 @@ long LinuxParser::UpTime() {
 
       std::getline(filestream, line);
       std::istringstream linestream(line);
-      linestream >> system >> idle;      
+      linestream >> system;      
     }
   
-  return std::stol(system); 
+return std::stol(system) ; 
 }
 
 // TODO: Read and return the number of jiffies for the system
@@ -110,12 +110,13 @@ long LinuxParser::Jiffies() { return 0; }
 long LinuxParser::ActiveJiffies(int pid) { 
   
   std::vector<string> time;
-  string line;
+  string line,value ;
   std::ifstream filestream(kProcDirectory + std::to_string(pid) + kStatFilename);
   if (filestream.is_open()) {
     while (std::getline(filestream, line)) {
         std::istringstream linestream(line);
-        linestream >> time.push_back();
+        linestream >> value;
+        time.push_back(value);
         if ( time.size() == 16 ) {break;}        
     } 
   }
@@ -250,12 +251,13 @@ string LinuxParser::User(int pid) {
 long LinuxParser::UpTime(int pid) { 
   
   std::vector<string> time;
-  string line;
+  string line,value;
   std::ifstream filestream(kProcDirectory + std::to_string(pid) + kStatFilename);
   if (filestream.is_open()) {
     while (std::getline(filestream, line)) {
         std::istringstream linestream(line);
-        linestream >> time.push_back();
+        linestream >> value;
+        time.push_back(value);
         if ( time.size() == 22 ) {break;}        
     } 
   } 
