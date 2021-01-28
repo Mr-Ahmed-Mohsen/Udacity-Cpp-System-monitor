@@ -72,7 +72,7 @@ float LinuxParser::MemoryUtilization()
   string line;
   string key;
   float value;
-  vector<float> MemElements;
+  vector<float> MemElements = {};
   std::ifstream filestream(kProcDirectory + kMeminfoFilename);
   if (filestream.is_open()) {
     for (int loop = 0; loop<3 ;loop++)
@@ -113,12 +113,14 @@ long LinuxParser::ActiveJiffies(int pid) {
   string line,value ;
   std::ifstream filestream(kProcDirectory + std::to_string(pid) + kStatFilename);
   if (filestream.is_open()) {
-    while (std::getline(filestream, line)) {
+        while(std::getline(filestream, line)){
         std::istringstream linestream(line);
-        linestream >> value;
+        while (linestream >> value){
         time.push_back(value);
-        if ( time.size() == 16 ) {break;}        
+        
+        if ( time.size() == 17 ) {break;}        
     } 
+    }
   }
   
   return stol(time.at(13)) + stol(time.at(14)) + stol(time.at(15)) + stol(time.at(16)) ; 
@@ -256,9 +258,10 @@ long LinuxParser::UpTime(int pid) {
   if (filestream.is_open()) {
     while (std::getline(filestream, line)) {
         std::istringstream linestream(line);
-        linestream >> value;
-        time.push_back(value);
-        if ( time.size() == 22 ) {break;}        
+        while (linestream >> value){
+        time.push_back(value);        
+        if ( time.size() == 22 ) {break;}    
+                                   }
     } 
   } 
   return stol(time.at(21)) / sysconf(_SC_CLK_TCK) ;
