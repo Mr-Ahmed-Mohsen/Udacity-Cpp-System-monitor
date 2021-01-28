@@ -149,7 +149,7 @@ float LinuxParser::CpuUtilization() {
   total_notidle = user + nice + system + irq + softirq + steal + guest + guest_nice;
   total = total_idle + total_notidle;
 
-  return (total - total_idle) / total ;
+  return (float)((total - total_idle) / total) ;
 }
 
 // TODO: Read and return the total number of processes
